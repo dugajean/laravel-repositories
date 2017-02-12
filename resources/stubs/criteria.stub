@@ -10,7 +10,6 @@ class criteria_class extends Criteria
     /**
      * @param $model
      * @param Repository $repository
-     *
      * @return mixed
      */
     public function apply($model, Repository $repository)
