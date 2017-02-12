@@ -1,11 +1,9 @@
-<?php namespace Bosnadev\Repositories\Contracts;
+<?php 
 
-/**
- * Interface RepositoryInterface
- * @package Bosnadev\Repositories\Contracts
- */
-interface RepositoryInterface {
+namespace Bosnadev\Repositories\Contracts;
 
+interface RepositoryInterface 
+{
     /**
      * @param array $columns
      * @return mixed

@@ -4,12 +4,8 @@ namespace Bosnadev\Repositories\Contracts;
 
 use Bosnadev\Repositories\Criteria\Criteria;
 
-/**
- * Interface CriteriaInterface
- * @package Bosnadev\Repositories\Contracts
- */
-interface CriteriaInterface {
-
+interface CriteriaInterface 
+{
     /**
      * @param bool $status
      * @return $this

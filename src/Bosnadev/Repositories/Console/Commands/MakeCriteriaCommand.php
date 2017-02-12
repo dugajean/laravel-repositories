@@ -7,11 +7,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Bosnadev\Repositories\Console\Commands\Creators\CriteriaCreator;
 
-/**
- * Class MakeCriteriaCommand
- *
- * @package Bosnadev\Repositories\Console\Commands
- */
 class MakeCriteriaCommand extends Command
 {
     /**

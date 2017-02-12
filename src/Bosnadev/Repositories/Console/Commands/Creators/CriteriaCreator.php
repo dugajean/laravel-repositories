@@ -6,13 +6,8 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Config;
 use Doctrine\Common\Inflector\Inflector;
 
-/**
- * Class CriteriaCreator
- *
- * @package Bosnadev\Repositories\Console\Commands\Creators
- */
-class CriteriaCreator {
-
+class CriteriaCreator 
+{
     /**
      * @var Filesystem
      */

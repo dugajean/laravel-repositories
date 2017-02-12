@@ -10,23 +10,21 @@ use Bosnadev\Repositories\Exceptions\RepositoryException;
 use Bosnadev\Repositories\Contracts\CriteriaInterface;
 use Bosnadev\Repositories\Criteria\Criteria;
 
-/**
- * Class Repository
- * @package Bosnadev\Repositories\Eloquent
- */
 abstract class Repository implements RepositoryInterface, CriteriaInterface
 {
-
     /**
      * @var App
      */
     private $app;
 
     /**
-     * @var
+     * @var Model
      */
     protected $model;
 
+    /**
+     * @var Model
+     */
     protected $newModel;
 
     /**
@@ -93,7 +91,7 @@ abstract class Repository implements RepositoryInterface, CriteriaInterface
     public function lists($value, $key = null)
     {
         $this->applyCriteria();
-        $lists = $this->model->lists($value, $key);
+        $lists = $this->model->pluck($value, $key);
         if (is_array($lists)) {
             return $lists;
         }
@@ -271,6 +269,16 @@ abstract class Repository implements RepositoryInterface, CriteriaInterface
     }
 
     /**
+     * Returns clean entity of model.
+     * 
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function getModel()
+    {
+        return $this->newModel;
+    }
+
+    /**
      * @return $this
      */
     public function resetScope()
@@ -304,6 +312,7 @@ abstract class Repository implements RepositoryInterface, CriteriaInterface
     public function getByCriteria(Criteria $criteria)
     {
         $this->model = $criteria->apply($this->model, $this);
+
         return $this;
     }
 
@@ -326,6 +335,7 @@ abstract class Repository implements RepositoryInterface, CriteriaInterface
         }
 
         $this->criteria->push($criteria);
+
         return $this;
     }
 
@@ -338,8 +348,9 @@ abstract class Repository implements RepositoryInterface, CriteriaInterface
             return $this;
 
         foreach ($this->getCriteria() as $criteria) {
-            if ($criteria instanceof Criteria)
+            if ($criteria instanceof Criteria) {
                 $this->model = $criteria->apply($this->model, $this);
+            }
         }
 
         return $this;

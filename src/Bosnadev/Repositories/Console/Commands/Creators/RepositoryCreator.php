@@ -6,13 +6,8 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Config;
 use Doctrine\Common\Inflector\Inflector;
 
-/**
- * Class RepositoryCreator
- *
- * @package Bosnadev\Repositories\Console\Commands\Creators
- */
-class RepositoryCreator {
-
+class RepositoryCreator 
+{
     /**
      * @var Filesystem
      */
@@ -24,7 +19,7 @@ class RepositoryCreator {
     protected $repository;
 
     /**
-     * @var
+     * @var 
      */
     protected $model;
 
