@@ -1,14 +1,14 @@
 <?php
 
-namespace Bosnadev\Repositories\Providers;
+namespace Dugajean\Repositories\Providers;
 
 use Illuminate\Support\Composer;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
-use Bosnadev\Repositories\Console\Commands\MakeCriteriaCommand;
-use Bosnadev\Repositories\Console\Commands\MakeRepositoryCommand;
-use Bosnadev\Repositories\Console\Commands\Creators\CriteriaCreator;
-use Bosnadev\Repositories\Console\Commands\Creators\RepositoryCreator;
+use Dugajean\Repositories\Console\Commands\MakeCriteriaCommand;
+use Dugajean\Repositories\Console\Commands\MakeRepositoryCommand;
+use Dugajean\Repositories\Console\Commands\Creators\CriteriaCreator;
+use Dugajean\Repositories\Console\Commands\Creators\RepositoryCreator;
 
 class RepositoryProvider extends ServiceProvider
 {
@@ -27,12 +27,10 @@ class RepositoryProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Config path.
-        $config_path = __DIR__ . '/../../../../config/repositories.php';
+        $configPath = __DIR__ . '/../../config/repositories.php';
 
-        // Publish config.
         $this->publishes(
-            [$config_path => config_path('repositories.php')],
+            [$configPath => config_path('repositories.php')],
             'repositories'
         );
     }
@@ -44,24 +42,14 @@ class RepositoryProvider extends ServiceProvider
      */
     public function register()
     {
-        // Register bindings.
         $this->registerBindings();
-
-        // Register make repository command.
         $this->registerMakeRepositoryCommand();
-
-        // Register make criteria command.
         $this->registerMakeCriteriaCommand();
-
-        // Register commands
         $this->commands(['command.repository.make', 'command.criteria.make']);
+        $configPath = __DIR__ . '/../../config/repositories.php';
 
-        // Config path.
-        $config_path = __DIR__ . '/../../../../config/repositories.php';
-
-        // Merge config.
         $this->mergeConfigFrom(
-            $config_path,
+            $configPath,
             'repositories'
         );
     }
@@ -71,20 +59,16 @@ class RepositoryProvider extends ServiceProvider
      */
     protected function registerBindings()
     {
-        // FileSystem.
         $this->app->instance('FileSystem', new Filesystem());
 
-        // Composer.
         $this->app->bind('Composer', function ($app) {
             return new Composer($app['FileSystem']);
         });
 
-        // Repository creator.
         $this->app->singleton('RepositoryCreator', function ($app) {
             return new RepositoryCreator($app['FileSystem']);
         });
 
-        // Criteria creator.
         $this->app->singleton('CriteriaCreator', function ($app) {
             return new CriteriaCreator($app['FileSystem']);
         });
@@ -95,9 +79,8 @@ class RepositoryProvider extends ServiceProvider
      */
     protected function registerMakeRepositoryCommand()
     {
-        // Make repository command.
         $this->app->singleton('command.repository.make', function ($app) {
-            return new MakeRepositoryCommand($app['RepositoryCreator'], $app['Composer']);
+            return new MakeRepositoryCommand($app['RepositoryCreator']);
         });
     }
 
@@ -108,7 +91,7 @@ class RepositoryProvider extends ServiceProvider
     {
         // Make criteria command.
         $this->app->singleton('command.criteria.make', function ($app) {
-            return new MakeCriteriaCommand($app['CriteriaCreator'], $app['Composer']);
+            return new MakeCriteriaCommand($app['CriteriaCreator']);
         });
     }
 
@@ -121,7 +104,7 @@ class RepositoryProvider extends ServiceProvider
     {
         return [
             'command.repository.make',
-            'command.criteria.make'
+            'command.criteria.make',
         ];
     }
 }

@@ -2,17 +2,19 @@
 
 namespace criteria_namespace;
 
-use Bosnadev\Repositories\Criteria\Criteria;
-use Bosnadev\Repositories\Contracts\RepositoryInterface as Repository;
+use Dugajean\Repositories\Criteria\Criteria;
+use Dugajean\Repositories\Contracts\RepositoryInterface;
 
 class criteria_class extends Criteria 
 {
     /**
+     * The criteria on which to repository should perform.
+     *
      * @param $model
      * @param Repository $repository
      * @return mixed
      */
-    public function apply($model, Repository $repository)
+    public function apply($model, RepositoryInterface $repository)
     {
         return $model;
     }

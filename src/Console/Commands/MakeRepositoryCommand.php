@@ -1,11 +1,13 @@
 <?php
 
-namespace Bosnadev\Repositories\Console\Commands;
+namespace Dugajean\Repositories\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Composer;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-use Bosnadev\Repositories\Console\Commands\Creators\RepositoryCreator;
+use Dugajean\Repositories\Console\Commands\Creators\CreatorInterface;
+use Dugajean\Repositories\Console\Commands\Creators\RepositoryCreator;
 
 class MakeRepositoryCommand extends Command
 {
@@ -29,7 +31,7 @@ class MakeRepositoryCommand extends Command
     protected $creator;
 
     /**
-     * @var
+     * @var Composer
      */
     protected $composer;
 
@@ -40,10 +42,7 @@ class MakeRepositoryCommand extends Command
     {
         parent::__construct();
 
-        // Set the creator.
-        $this->creator  = $creator;
-
-        // Set composer.
+        $this->creator = $creator;
         $this->composer = app()['composer'];
     }
 
@@ -51,39 +50,31 @@ class MakeRepositoryCommand extends Command
      * Execute the console command.
      *
      * @return mixed
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function handle()
     {
-        // Get the arguments.
         $arguments = $this->argument();
+        $options = $this->option();
 
-        // Get the options.
-        $options   = $this->option();
-
-        // Write repository.
         $this->writeRepository($arguments, $options);
-
-        // Dump autoload.
         $this->composer->dumpAutoloads();
     }
 
     /**
-     * @param $arguments
-     * @param $options
+     * @param array $arguments
+     * @param array $options
+     *
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     protected function writeRepository($arguments, $options)
     {
-        // Set repository.
-        $repository = $arguments['repository'];
-
-        // Set model.
-        $model      = $options['model'];
-
-        // Create the repository.
-        if($this->creator->create($repository, $model))
-        {
-            // Information message.
-            $this->info("Successfully created the repository class");
+        try {
+            if ($this->creator->create($arguments['repository'], $options['model'])) {
+                $this->info('Successfully created the repository class');
+            }
+        } catch (\RuntimeException $e) {
+            $this->error($e->getMessage());
         }
     }
 
@@ -95,7 +86,7 @@ class MakeRepositoryCommand extends Command
     protected function getArguments()
     {
         return [
-            ['repository', InputArgument::REQUIRED, 'The repository name.']
+            ['repository', InputArgument::REQUIRED, 'The repository name.'],
         ];
     }
 

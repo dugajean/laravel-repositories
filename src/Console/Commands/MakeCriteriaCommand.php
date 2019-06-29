@@ -1,11 +1,13 @@
 <?php
 
-namespace Bosnadev\Repositories\Console\Commands;
+namespace Dugajean\Repositories\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Composer;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-use Bosnadev\Repositories\Console\Commands\Creators\CriteriaCreator;
+use Dugajean\Repositories\Console\Commands\Creators\CriteriaCreator;
+use Dugajean\Repositories\Console\Commands\Creators\CreatorInterface;
 
 class MakeCriteriaCommand extends Command
 {
@@ -24,12 +26,12 @@ class MakeCriteriaCommand extends Command
     protected $description = 'Create a new criteria class';
 
     /**
-     * @var
+     * @var CreatorInterface
      */
     protected $creator;
 
     /**
-     * @var
+     * @var Composer
      */
     protected $composer;
 
@@ -40,10 +42,7 @@ class MakeCriteriaCommand extends Command
     {
         parent::__construct();
 
-        // Set the creator.
-        $this->creator  = $creator;
-
-        // Set the composer.
+        $this->creator = $creator;
         $this->composer = app()['composer'];
     }
 
@@ -51,42 +50,33 @@ class MakeCriteriaCommand extends Command
      * Execute the console command.
      *
      * @return mixed
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function handle()
     {
-        // Get the arguments.
         $arguments = $this->argument();
+        $options = $this->option();
 
-        // Get the options.
-        $options   = $this->option();
-
-        // Write criteria.
         $this->writeCriteria($arguments, $options);
-
-        // Dump autoload.
         $this->composer->dumpAutoloads();
     }
 
     /**
      * Write the criteria.
      *
-     * @param $arguments
-     * @param $options
+     * @param array $arguments
+     * @param array $options
+     *
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function writeCriteria($arguments, $options)
     {
-        // Set criteria.
-        $criteria = $arguments['criteria'];
-
-        // Set model.
-        $model    = $options['model'];
-
-        // Create the criteria.
-        if($this->creator->create($criteria, $model))
-        {
-            // Information message.
-            $this->info("Succesfully created the criteria class.");
+        if ($this->creator->create($arguments['criteria'], $options['model'])) {
+            $this->info('Successfully created the criteria class.');
+            return;
         }
+
+        $this->error("Could not create criteria class. Make sure this criteria doesn't exist.");
     }
 
     /**
@@ -97,7 +87,7 @@ class MakeCriteriaCommand extends Command
     protected function getArguments()
     {
         return [
-            ['criteria', InputArgument::REQUIRED, 'The criteria name.']
+            ['criteria', InputArgument::REQUIRED, 'The criteria name.'],
         ];
     }
 

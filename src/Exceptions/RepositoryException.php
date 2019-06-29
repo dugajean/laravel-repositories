@@ -1,8 +1,7 @@
 <?php
 
-namespace Bosnadev\Repositories\Exceptions;
+namespace Dugajean\Repositories\Exceptions;
 
 class RepositoryException extends \Exception
 {
-
 }

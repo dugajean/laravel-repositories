@@ -2,16 +2,18 @@
 
 namespace repository_namespace;
 
-use Bosnadev\Repositories\Contracts\RepositoryInterface;
-use Bosnadev\Repositories\Eloquent\Repository;
+use model_path\model_name;
+use Dugajean\Repositories\Eloquent\Repository;
 
 class repository_class extends Repository
 {
     /**
+     * The model tied to this repository.
+     *
      * @return string
      */
     public function model()
     {
-        return \model_path\model_name::class;
+        return model_name::class;
     }
 }

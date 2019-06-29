@@ -1,30 +1,33 @@
 <?php
 
-namespace Bosnadev\Repositories\Contracts;
+namespace Dugajean\Repositories\Contracts;
 
-use Bosnadev\Repositories\Criteria\Criteria;
+use Dugajean\Repositories\Criteria\Criteria;
 
-interface CriteriaInterface 
+interface CriteriaInterface
 {
     /**
      * @param bool $status
+     *
      * @return $this
      */
     public function skipCriteria($status = true);
 
     /**
-     * @return mixed
+     * @return Criteria
      */
     public function getCriteria();
 
     /**
      * @param Criteria $criteria
+     *
      * @return $this
      */
     public function getByCriteria(Criteria $criteria);
 
     /**
      * @param Criteria $criteria
+     *
      * @return $this
      */
     public function pushCriteria(Criteria $criteria);
@@ -32,5 +35,5 @@ interface CriteriaInterface
     /**
      * @return $this
      */
-    public function  applyCriteria();
+    public function applyCriteria();
 }

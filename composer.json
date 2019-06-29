@@ -1,44 +1,48 @@
 {
-  "name": "bosnadev/repositories",
-  "description": "Laravel Repositories",
-  "license": "MIT",
-  "homepage": "https://bosnadev.com",
-  "keywords": ["laravel", "repository", "repositories", "eloquent", "database"],
-  "authors": [
-    {
-      "name": "Mirza Pasic",
-      "email": "mirza@bosnadev.com"
+    "name": "dugajean/repositories",
+    "description": "Laravel Repositories",
+    "license": "MIT",
+    "homepage": "http://dukagj.in",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "keywords": [
+        "laravel",
+        "repository",
+        "repositories",
+        "eloquent",
+        "database"
+    ],
+    "authors": [
+        {
+            "name": "Dukagjin Surdulli",
+            "email": "me@dukagj.in"
+        }
+    ],
+    "require": {
+        "php": "^7.1.3",
+        "illuminate/support": "~5",
+        "illuminate/database": "~5",
+        "illuminate/filesystem": "~5",
+        "illuminate/console": "~5"
     },
-    {
-      "name": "Maarten Paauw",
-      "email": "maartenpaauw@gmail.com"
+    "require-dev": {
+        "mockery/mockery": "@stable"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dugajean\\Repositories\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Dugajean\\Repositories\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Dugajean\\Repositories\\Providers\\RepositoryProvider"
+            ]
+        }
     }
-  ],
-  "require": {
-    "php": ">=5.5.9",
-    "illuminate/support": "^5.4",
-    "illuminate/database": "^5.4",
-    "illuminate/filesystem": "^5.4",
-    "illuminate/console": "^5.4"
-  },
-  "require-dev": {
-    "mockery/mockery": "dev-master@dev"
-  },
-  "autoload": {
-    "psr-4": {
-      "Bosnadev\\": "src/Bosnadev/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Bosnadev\\Repositories\\Tests\\": "tests/"
-    }
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "0.x-dev"
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true
 }

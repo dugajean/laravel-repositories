@@ -40,7 +40,7 @@ return [
     | The path to the criteria folder.
     |
     */
-    'criteria_path'=> 'app' . DIRECTORY_SEPARATOR . 'Repositories' . DIRECTORY_SEPARATOR . 'Criteria',
+    'criteria_path' => 'app' . DIRECTORY_SEPARATOR . 'Repositories' . DIRECTORY_SEPARATOR . 'Criteria',
 
     /*
     |--------------------------------------------------------------------------
@@ -50,5 +50,5 @@ return [
     | The model namespace.
     |
     */
-    'model_namespace' => 'App'
+    'model_namespace' => 'App',
 ];
