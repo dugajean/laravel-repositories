@@ -1,9 +1,9 @@
 # Laravel Repositories
 
-[![Build Status](https://travis-ci.org/dugajean/laravel-repositories.svg?branch=master)](https://travis-ci.org/dugajean/laravel-repositories) 
-[![Latest Stable Version](https://poser.pugx.org/dugajean/laravel-repositories/v/stable)](https://packagist.org/packages/dugajean/laravel-repositories)
-[![Total Downloads](https://poser.pugx.org/dugajean/laravel-repositories/downloads)](https://packagist.org/packages/dugajean/laravel-repositories)
-[![License](https://poser.pugx.org/dugajean/laravel-repositories/license)](https://packagist.org/packages/dugajean/laravel-repositories)
+[![Build Status](https://travis-ci.org/dugajean/laravel-repositories.svg?branch=master)](https://travis-ci.org/dugajean/repositories) 
+[![Latest Stable Version](https://poser.pugx.org/dugajean/repositories/v/stable)](https://packagist.org/packages/dugajean/repositories)
+[![Total Downloads](https://poser.pugx.org/dugajean/repositories/downloads)](https://packagist.org/packages/dugajean/repositories)
+[![License](https://poser.pugx.org/dugajean/repositories/license)](https://packagist.org/packages/dugajean/repositories)
 
 Laravel Repositories is a package for Laravel 5 which is used to abstract the database layer. This makes applications much easier to maintain.
 
