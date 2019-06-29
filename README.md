@@ -158,7 +158,7 @@ class LengthOverTwoHours extends Criteria
     /**
      * @param $model
      * @param RepositoryInterface $repository
- *                                       
+     *                                       
      * @return Model
      */
     public function apply($model, RepositoryInterface $repository)
