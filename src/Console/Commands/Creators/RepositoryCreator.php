@@ -5,9 +5,7 @@ namespace Dugajean\Repositories\Console\Commands\Creators;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Database\Eloquent\Model;
 use Doctrine\Common\Inflector\Inflector;
-use Dugajean\Repositories\Eloquent\Repository;
 
 class RepositoryCreator
 {
@@ -17,12 +15,12 @@ class RepositoryCreator
     protected $files;
 
     /**
-     * @var Repository
+     * @var string
      */
     protected $repository;
 
     /**
-     * @var Model
+     * @var string
      */
     protected $model;
 
@@ -43,7 +41,7 @@ class RepositoryCreator
     }
 
     /**
-     * @param mixed $repository
+     * @param string $repository
      */
     public function setRepository($repository)
     {
@@ -51,7 +49,7 @@ class RepositoryCreator
     }
 
     /**
-     * @return Model
+     * @return string
      */
     public function getModel()
     {
@@ -59,7 +57,7 @@ class RepositoryCreator
     }
 
     /**
-     * @param Model $model
+     * @param string $model
      */
     public function setModel($model)
     {
@@ -69,8 +67,8 @@ class RepositoryCreator
     /**
      * Create the repository.
      *
-     * @param Repository $repository
-     * @param Model      $model
+     * @param string $repository
+     * @param string $model
      *
      * @return int
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException

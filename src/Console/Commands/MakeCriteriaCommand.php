@@ -4,7 +4,6 @@ namespace Dugajean\Repositories\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Composer;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Dugajean\Repositories\Console\Commands\Creators\CriteriaCreator;
 use Dugajean\Repositories\Console\Commands\Creators\CreatorInterface;
@@ -49,34 +48,28 @@ class MakeCriteriaCommand extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function handle()
     {
-        $arguments = $this->argument();
-        $options = $this->option();
-
-        $this->writeCriteria($arguments, $options);
+        $this->writeCriteria();
         $this->composer->dumpAutoloads();
     }
 
     /**
      * Write the criteria.
      *
-     * @param array $arguments
-     * @param array $options
-     *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    public function writeCriteria($arguments, $options)
+    public function writeCriteria()
     {
-        if ($this->creator->create($arguments['criteria'], $options['model'])) {
-            $this->info('Successfully created the criteria class.');
-            return;
+        try {
+            if ($this->creator->create($this->argument('criteria'), $this->argument('model'))) {
+                $this->info('Successfully created the criteria class');
+            }
+        } catch (\RuntimeException $e) {
+            $this->error($e->getMessage());
         }
-
-        $this->error("Could not create criteria class. Make sure this criteria doesn't exist.");
     }
 
     /**
@@ -88,18 +81,7 @@ class MakeCriteriaCommand extends Command
     {
         return [
             ['criteria', InputArgument::REQUIRED, 'The criteria name.'],
-        ];
-    }
-
-    /**
-     * Get the console command options.
-     *
-     * @return array
-     */
-    protected function getOptions()
-    {
-        return [
-            ['model', null, InputOption::VALUE_OPTIONAL, 'The model name.', null],
+            ['model', InputArgument::REQUIRED, 'The model name.'],
         ];
     }
 }

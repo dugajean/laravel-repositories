@@ -4,9 +4,7 @@ namespace Dugajean\Repositories\Console\Commands\Creators;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Database\Eloquent\Model;
 use Doctrine\Common\Inflector\Inflector;
-use Dugajean\Repositories\Criteria\Criteria;
 
 class CriteriaCreator
 {
@@ -16,12 +14,12 @@ class CriteriaCreator
     protected $files;
 
     /**
-     * @var Criteria
+     * @var string
      */
-    protected $entity;
+    protected $criteria;
 
     /**
-     * @var Model
+     * @var string
      */
     protected $model;
 
@@ -36,21 +34,21 @@ class CriteriaCreator
     /**
      * @return mixed
      */
-    public function getEntity()
+    public function getCriteria()
     {
-        return $this->entity;
+        return $this->criteria;
     }
 
     /**
-     * @param mixed $entity
+     * @param string $criteria
      */
-    public function setEntity($entity)
+    public function setCriteria($criteria)
     {
-        $this->entity = $entity;
+        $this->criteria = $criteria;
     }
 
     /**
-     * @return Model
+     * @return string
      */
     public function getModel()
     {
@@ -58,7 +56,7 @@ class CriteriaCreator
     }
 
     /**
-     * @param Model $model
+     * @param string $model
      */
     public function setModel($model)
     {
@@ -68,15 +66,15 @@ class CriteriaCreator
     /**
      * Create the criteria.
      *
-     * @param Criteria $criteria
-     * @param Model    $model
+     * @param string $criteria
+     * @param string $model
      *
      * @return int
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function create($criteria, $model)
     {
-        $this->setEntity($criteria);
+        $this->setCriteria($criteria);
         $this->setModel($model);
         $this->createDirectory();
 
@@ -121,7 +119,7 @@ class CriteriaCreator
      */
     protected function getPopulateData()
     {
-        $criteria = $this->getEntity();
+        $criteria = $this->getCriteria();
         $model = $this->pluralizeModel();
         $criteriaNamespace = Config::get('repositories.criteria_namespace');
         $criteriaClass = $criteria;
@@ -145,7 +143,7 @@ class CriteriaCreator
      */
     protected function getPath()
     {
-        return $this->getDirectory() . DIRECTORY_SEPARATOR . $this->getEntity() . '.php';
+        return $this->getDirectory() . DIRECTORY_SEPARATOR . $this->getCriteria() . '.php';
     }
 
     /**
@@ -196,7 +194,7 @@ class CriteriaCreator
     protected function createClass()
     {
         if ($this->files->exists($this->getPath())) {
-            return false;
+            throw new \RuntimeException("The criteria with the name '$this->criteria' already exists.");
         }
 
         return $this->files->put($this->getPath(), $this->populateStub());
@@ -209,6 +207,10 @@ class CriteriaCreator
      */
     protected function pluralizeModel()
     {
+        if (null === $this->getModel()) {
+            return '';
+        }
+
         $pluralized = Inflector::pluralize($this->getModel());
         $modelName = ucfirst($pluralized);
 

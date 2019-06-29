@@ -49,28 +49,21 @@ class MakeRepositoryCommand extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function handle()
     {
-        $arguments = $this->argument();
-        $options = $this->option();
-
-        $this->writeRepository($arguments, $options);
+        $this->writeRepository();
         $this->composer->dumpAutoloads();
     }
 
     /**
-     * @param array $arguments
-     * @param array $options
-     *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    protected function writeRepository($arguments, $options)
+    protected function writeRepository()
     {
         try {
-            if ($this->creator->create($arguments['repository'], $options['model'])) {
+            if ($this->creator->create($this->argument('repository'), $this->option('model'))) {
                 $this->info('Successfully created the repository class');
             }
         } catch (\RuntimeException $e) {

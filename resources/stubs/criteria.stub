@@ -10,8 +10,9 @@ class criteria_class extends Criteria
     /**
      * The criteria on which to repository should perform.
      *
-     * @param $model
-     * @param Repository $repository
+     * @param mixed               $model
+     * @param RepositoryInterface $repository
+
      * @return mixed
      */
     public function apply($model, RepositoryInterface $repository)
