@@ -146,7 +146,9 @@ php artisan make:criteria LengthOverTwoHours
 Here is a sample criteria:
 
 ```php
-<?php namespace App\Repositories\Criteria\Films;
+<?php 
+
+namespace App\Repositories\Criteria\Films;
 
 use Dugajean\Repositories\Criteria\Criteria;
 use Dugajean\Repositories\Contracts\RepositoryInterface;
@@ -169,7 +171,9 @@ class LengthOverTwoHours extends Criteria
 Now, inside you controller class you call pushCriteria method:
 
 ```php
-<?php namespace App\Http\Controllers;
+<?php 
+
+namespace App\Http\Controllers;
 
 use App\Repositories\FilmRepository;
 use App\Repositories\Criteria\Films\LengthOverTwoHours;
