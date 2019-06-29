@@ -17,7 +17,6 @@ Run the following command from you terminal:
  composer require dugajean/repositories
  ```
 
-
 ## Usage
 
 First, create your repository class with this command:
@@ -150,19 +149,19 @@ Here is a sample criteria:
 <?php namespace App\Repositories\Criteria\Films;
 
 use Dugajean\Repositories\Criteria\Criteria;
-use Dugajean\Repositories\Contracts\RepositoryInterface as Repository;
+use Dugajean\Repositories\Contracts\RepositoryInterface;
 
-class LengthOverTwoHours extends Criteria {
-
+class LengthOverTwoHours extends Criteria 
+{
     /**
      * @param $model
      * @param RepositoryInterface $repository
-     * @return mixed
+ *                                       
+     * @return Model
      */
-    public function apply($model, Repository $repository)
+    public function apply($model, RepositoryInterface $repository)
     {
-        $model = $model->where('length', '>', 120);
-        return $model;
+        return $model->where('length', '>', 120);
     }
 }
 ```
@@ -175,8 +174,8 @@ Now, inside you controller class you call pushCriteria method:
 use App\Repositories\FilmRepository;
 use App\Repositories\Criteria\Films\LengthOverTwoHours;
 
-class FilmsController extends Controller {
-
+class FilmsController extends Controller 
+{
     /**
      * @var FilmsRepository
      */
@@ -190,6 +189,7 @@ class FilmsController extends Controller {
     public function index() 
     {
         $this->filmRepository->pushCriteria(new LengthOverTwoHours());
+        
         return response()->json($this->filmRepository->all());
     }
 }
