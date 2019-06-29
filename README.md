@@ -1,87 +1,57 @@
 # Laravel Repositories
 
-[![Build Status](https://travis-ci.org/bosnadev/repository.svg?branch=master)](https://travis-ci.org/bosnadev/repository) 
-[![SensioLabsInsight](https://img.shields.io/sensiolabs/i/f39e6dc7-1364-481d-b722-8413bdc3200f.svg?style=flat)](https://insight.sensiolabs.com/projects/f39e6dc7-1364-481d-b722-8413bdc3200f)
-[![Latest Stable Version](https://poser.pugx.org/bosnadev/repositories/v/stable)](https://packagist.org/packages/bosnadev/repositories)
-[![Total Downloads](https://poser.pugx.org/bosnadev/repositories/downloads)](https://packagist.org/packages/bosnadev/repositories)
-[![Monthly Downloads](https://poser.pugx.org/bosnadev/repositories/d/monthly)](https://packagist.org/packages/bosnadev/repositories)
-[![License](https://poser.pugx.org/bosnadev/repositories/license)](https://packagist.org/packages/bosnadev/repositories)
+[![Build Status](https://travis-ci.org/dugajean/laravel-repositories.svg?branch=master)](https://travis-ci.org/dugajean/laravel-repositories) 
+[![Latest Stable Version](https://poser.pugx.org/dugajean/laravel-repositories/v/stable)](https://packagist.org/packages/dugajean/laravel-repositories)
+[![Total Downloads](https://poser.pugx.org/dugajean/laravel-repositories/downloads)](https://packagist.org/packages/dugajean/laravel-repositories)
+[![License](https://poser.pugx.org/dugajean/laravel-repositories/license)](https://packagist.org/packages/dugajean/laravel-repositories)
 
 Laravel Repositories is a package for Laravel 5 which is used to abstract the database layer. This makes applications much easier to maintain.
+
+This package was originally created by Bosnadev, who is no longer maintaining it; therefore, I have decided to take this project over and assure its maintenance.
 
 ## Installation
 
 Run the following command from you terminal:
 
-
  ```bash
- composer require "bosnadev/repositories: 0.*"
+ composer require dugajean/repositories
  ```
-
-or add this to require section in your composer.json file:
-
- ```
- "bosnadev/repositories": "0.*"
- ```
-
-then run ```composer update```
 
 
 ## Usage
 
-First, create your repository class. Note that your repository class MUST extend ```Bosnadev\Repositories\Eloquent\Repository``` and implement model() method
+First, create your repository class with this command:
 
-```php
-<?php namespace App\Repositories;
-
-use Bosnadev\Repositories\Contracts\RepositoryInterface;
-use Bosnadev\Repositories\Eloquent\Repository;
-
-class FilmsRepository extends Repository {
-
-    public function model() {
-        return 'App\Film';
-    }
-}
+```bash
+php artisan make:repository Film
 ```
 
-By implementing ```model()``` method you telling repository what model class you want to use. Now, create ```App\Film``` model:
+Where `Film` is the name of an existing model. If the model does not exist, it will be generated for you.
+
+Finally, use the repository in the controller:
 
 ```php
-<?php namespace App;
+<?php 
 
-use Illuminate\Database\Eloquent\Model;
+namespace App\Http\Controllers;
 
-class Film extends Model {
-
-    protected $primaryKey = 'film_id';
-
-    protected $table = 'film';
-
-    protected $casts = [
-        "rental_rate"       => 'float'
-    ];
-}
-```
-
-And finally, use the repository in the controller:
-
-```php
-<?php namespace App\Http\Controllers;
-
-use App\Repositories\FilmsRepository as Film;
+use App\Repositories\FilmRepository;
 
 class FilmsController extends Controller {
 
-    private $film;
+    /**
+     * @var FilmRepository 
+     */
+    private $filmRepository;
 
-    public function __construct(Film $film) {
-
-        $this->film = $film;
+    public function __construct(FilmRepository $filmRepository) 
+    {
+        $this->filmRepository = $filmRepository;
     }
 
-    public function index() {
-        return \Response::json($this->film->all());
+    public function index() 
+    {
+        return response()->json($this->filmRepository->all());
     }
 }
 ```
@@ -90,23 +60,23 @@ class FilmsController extends Controller {
 
 The following methods are available:
 
-##### Bosnadev\Repositories\Contracts\RepositoryInterface
+##### Dugajean\Repositories\Contracts\RepositoryInterface
 
 ```php
-public function all($columns = array('*'))
+public function all($columns = ['*'])
 public function lists($value, $key = null)
-public function paginate($perPage = 1, $columns = array('*'));
+public function paginate($perPage = 1, $columns = ['*'], $method = 'full');
 public function create(array $data)
 // if you use mongodb then you'll need to specify primary key $attribute
-public function update(array $data, $id, $attribute = "id")
+public function update(array $data, $id, $attribute = 'id')
 public function delete($id)
-public function find($id, $columns = array('*'))
-public function findBy($field, $value, $columns = array('*'))
-public function findAllBy($field, $value, $columns = array('*'))
-public function findWhere($where, $columns = array('*'))
+public function find($id, $columns = ['*'])
+public function findBy($field, $value, $columns = ['*'])
+public function findAllBy($field, $value, $columns = ['*'])
+public function findWhere($where, $columns = ['*'])
 ```
 
-##### Bosnadev\Repositories\Contracts\CriteriaInterface
+##### Dugajean\Repositories\Contracts\CriteriaInterface
 
 ```php
 public function apply($model, Repository $repository)
@@ -114,68 +84,73 @@ public function apply($model, Repository $repository)
 
 ### Example usage
 
-
 Create a new film in repository:
 
 ```php
-$this->film->create(Input::all());
+$this->filmRepository->create(Input::all());
 ```
 
 Update existing film:
 
 ```php
-$this->film->update(Input::all(), $film_id);
+$this->filmRepository->update(Input::all(), $film_id);
 ```
 
 Delete film:
 
 ```php
-$this->film->delete($id);
+$this->filmRepository->delete($id);
 ```
 
 Find film by film_id;
 
 ```php
-$this->film->find($id);
+$this->filmRepository->find($id);
 ```
 
 you can also chose what columns to fetch:
 
 ```php
-$this->film->find($id, ['title', 'description', 'release_date']);
+$this->filmRepository->find($id, ['title', 'description', 'release_date']);
 ```
 
 Get a single row by a single column criteria.
 
 ```php
-$this->film->findBy('title', $title);
+$this->filmRepository->findBy('title', $title);
 ```
 
 Or you can get all rows by a single column criteria.
 ```php
-$this->film->findAllBy('author_id', $author_id);
+$this->filmRepository->findAllBy('author_id', $author_id);
 ```
 
 Get all results by multiple fields
 
 ```php
-$this->film->findWhere([
+$this->filmRepository->findWhere([
     'author_id' => $author_id,
-    ['year','>',$year]
+    ['year', '>', $year]
 ]);
 ```
 
 ## Criteria
 
-Criteria is a simple way to apply specific condition, or set of conditions to the repository query. Your criteria class MUST extend the abstract ```Bosnadev\Repositories\Criteria\Criteria``` class.
+Criteria is a simple way to apply specific condition, or set of conditions to the repository query. 
 
-Here is a simple criteria:
+To create a Criteria class, run the following command:
+
+```bash
+php artisan make:criteria LengthOverTwoHours
+```
+
+Here is a sample criteria:
 
 ```php
 <?php namespace App\Repositories\Criteria\Films;
 
-use Bosnadev\Repositories\Criteria\Criteria;
-use Bosnadev\Repositories\Contracts\RepositoryInterface as Repository;
+use Dugajean\Repositories\Criteria\Criteria;
+use Dugajean\Repositories\Contracts\RepositoryInterface as Repository;
 
 class LengthOverTwoHours extends Criteria {
 
@@ -197,29 +172,28 @@ Now, inside you controller class you call pushCriteria method:
 ```php
 <?php namespace App\Http\Controllers;
 
+use App\Repositories\FilmRepository;
 use App\Repositories\Criteria\Films\LengthOverTwoHours;
-use App\Repositories\FilmsRepository as Film;
 
 class FilmsController extends Controller {
 
     /**
-     * @var Film
+     * @var FilmsRepository
      */
-    private $film;
+    private $filmRepository;
 
-    public function __construct(Film $film) {
-
-        $this->film = $film;
+    public function __construct(FilmRepository $filmRepository) 
+    {
+        $this->filmRepository = $filmRepository;
     }
 
-    public function index() {
-        $this->film->pushCriteria(new LengthOverTwoHours());
-        return \Response::json($this->film->all());
+    public function index() 
+    {
+        $this->filmRepository->pushCriteria(new LengthOverTwoHours());
+        return response()->json($this->filmRepository->all());
     }
 }
 ```
 
-
-## Credits
-
-This package is largely inspired by [this](https://github.com/prettus/l5-repository) great package by @andersao. [Here](https://github.com/anlutro/laravel-repository/) is another package I used as reference.
+## License
+Pouch is released under [the MIT License](LICENSE).
