@@ -7,12 +7,11 @@ use PHPUnit\Framework\TestCase;
 
 class RepositoryTest extends TestCase
 {
-
     protected $mock;
 
     protected $repository;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->mock = m::mock('Illuminate\Database\Eloquent\Model');
     }
