@@ -55,11 +55,21 @@ class FilmsController extends Controller {
 }
 ```
 
+###### Publishing The Configuration
+
+If you wish to override the path where the repositories and criteria live, publish the config file:
+
+```bash
+php artisan vendor:publish --provider="Dugajean\Repositories\Providers\RepositoryProvider"
+```
+
+Then simply open `config/repositories.php` and edit away!
+
 ## Available Methods
 
 The following methods are available:
 
-##### Dugajean\Repositories\Contracts\RepositoryInterface
+###### Dugajean\Repositories\Contracts\RepositoryInterface
 
 ```php
 public function all($columns = ['*'])
@@ -75,7 +85,7 @@ public function findAllBy($field, $value, $columns = ['*'])
 public function findWhere($where, $columns = ['*'])
 ```
 
-##### Dugajean\Repositories\Contracts\CriteriaInterface
+###### Dugajean\Repositories\Contracts\CriteriaInterface
 
 ```php
 public function apply($model, Repository $repository)

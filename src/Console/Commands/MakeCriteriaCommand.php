@@ -4,6 +4,7 @@ namespace Dugajean\Repositories\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Composer;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Dugajean\Repositories\Console\Commands\Creators\CriteriaCreator;
 use Dugajean\Repositories\Console\Commands\Creators\CreatorInterface;
@@ -64,7 +65,7 @@ class MakeCriteriaCommand extends Command
     public function writeCriteria()
     {
         try {
-            if ($this->creator->create($this->argument('criteria'), $this->argument('model'))) {
+            if ($this->creator->create($this->argument('criteria'), $this->option('model'))) {
                 $this->info('Successfully created the criteria class');
             }
         } catch (\RuntimeException $e) {
@@ -81,7 +82,18 @@ class MakeCriteriaCommand extends Command
     {
         return [
             ['criteria', InputArgument::REQUIRED, 'The criteria name.'],
-            ['model', InputArgument::REQUIRED, 'The model name.'],
+        ];
+    }
+
+    /**
+     * Get the console command options.
+     *
+     * @return array
+     */
+    protected function getOptions()
+    {
+        return [
+            ['model', null, InputOption::VALUE_REQUIRED, 'The model name.', null],
         ];
     }
 }
