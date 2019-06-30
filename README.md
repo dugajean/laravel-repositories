@@ -150,7 +150,7 @@ Criteria is a simple way to apply specific condition, or set of conditions to th
 To create a Criteria class, run the following command:
 
 ```bash
-php artisan make:criteria LengthOverTwoHours
+php artisan make:criteria LengthOverTwoHours --model=Film
 ```
 
 Here is a sample criteria:
@@ -191,7 +191,7 @@ use App\Repositories\Criteria\Films\LengthOverTwoHours;
 class FilmsController extends Controller 
 {
     /**
-     * @var FilmsRepository
+     * @var FilmRepository
      */
     private $filmRepository;
 
@@ -209,5 +209,12 @@ class FilmsController extends Controller
 }
 ```
 
+## Testing
+
+```bash
+$ vendor/bin/phpunit
+```
+
 ## License
+
 Pouch is released under [the MIT License](LICENSE).
