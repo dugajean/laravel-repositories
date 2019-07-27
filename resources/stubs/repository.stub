@@ -2,7 +2,7 @@
 
 namespace repository_namespace;
 
-use model_path\model_name;
+use model_namespace\model_name;
 use Dugajean\Repositories\Eloquent\Repository;
 
 class repository_class extends Repository
