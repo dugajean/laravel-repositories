@@ -29,6 +29,42 @@ Where `Film` is the name of an existing model. If the model does not exist, it w
 
 Finally, use the repository in the controller:
 
+## Config
+
+Add custom directory for your models, and model path like this :
+
+```php
+    /*
+        |--------------------------------------------------------------------------
+        | Model namespace
+        |--------------------------------------------------------------------------
+        |
+        | The model namespace.
+        |
+        */
+        'model_namespace' => 'App\Entities',
+    
+        /*
+        |--------------------------------------------------------------------------
+        | Model Path
+        |--------------------------------------------------------------------------
+        |
+        | The model path.
+        |
+        */
+    
+        'model_path' => 'app' . DIRECTORY_SEPARATOR . 'Entities'
+```
+
+Then create a repository like this : 
+
+```php
+    php artisan make:repository Test
+```
+This will create a Repository file within `app/Repositories`, and 
+a model file within `app/Entities`
+
+
 ```php
 <?php 
 
@@ -142,6 +178,7 @@ $this->filmRepository->findWhere([
     ['year', '>', $year]
 ]);
 ```
+
 
 ## Criteria
 
