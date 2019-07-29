@@ -50,7 +50,7 @@
         | The model namespace.
         |
         */
-        'model_namespace' => 'App\Entities',
+        'model_namespace' => 'App\Models',
 
         /*
         |--------------------------------------------------------------------------
@@ -61,5 +61,5 @@
         |
         */
 
-        'model_path' => 'app' . DIRECTORY_SEPARATOR . 'Entities'
+        'model_path' => 'app' . DIRECTORY_SEPARATOR . 'Models'
     ];
