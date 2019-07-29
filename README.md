@@ -62,7 +62,7 @@ Then create a repository like this :
     php artisan make:repository Test
 ```
 This will create a Repository file within `app/Repositories`, and 
-a model file within `app/Entities`
+a model file within `app/Models`
 
 
 ```php
