@@ -29,6 +29,32 @@ Where `Film` is the name of an existing model. If the model does not exist, it w
 
 Finally, use the repository in the controller:
 
+```php
+<?php 
+
+namespace App\Http\Controllers;
+
+use App\Repositories\FilmRepository;
+
+class FilmsController extends Controller {
+
+    /**
+     * @var FilmRepository 
+     */
+    private $filmRepository;
+
+    public function __construct(FilmRepository $filmRepository) 
+    {
+        $this->filmRepository = $filmRepository;
+    }
+
+    public function index() 
+    {
+        return response()->json($this->filmRepository->all());
+    }
+}
+```
+
 ## Config
 
 Add custom directory for your models, and model path like this :
@@ -64,32 +90,6 @@ Then create a repository like this :
 This will create a Repository file within `app/Repositories`, and 
 a model file within `app/Models`
 
-
-```php
-<?php 
-
-namespace App\Http\Controllers;
-
-use App\Repositories\FilmRepository;
-
-class FilmsController extends Controller {
-
-    /**
-     * @var FilmRepository 
-     */
-    private $filmRepository;
-
-    public function __construct(FilmRepository $filmRepository) 
-    {
-        $this->filmRepository = $filmRepository;
-    }
-
-    public function index() 
-    {
-        return response()->json($this->filmRepository->all());
-    }
-}
-```
 
 ###### Publishing The Configuration
 
