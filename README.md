@@ -42,7 +42,7 @@ Add custom directory for your models, and model path like this :
         | The model namespace.
         |
         */
-        'model_namespace' => 'App\Entities',
+        'model_namespace' => 'App\Models',
     
         /*
         |--------------------------------------------------------------------------
@@ -53,7 +53,7 @@ Add custom directory for your models, and model path like this :
         |
         */
     
-        'model_path' => 'app' . DIRECTORY_SEPARATOR . 'Entities'
+        'model_path' => 'app' . DIRECTORY_SEPARATOR . 'Models'
 ```
 
 Then create a repository like this : 
