@@ -1,6 +1,6 @@
 <?php
 
-namespace Bosnadev\Tests\Repositories;
+namespace Dugajean\Repositories\Tests;
 
 use Mockery as m;
 use PHPUnit\Framework\TestCase;
