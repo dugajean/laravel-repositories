@@ -58,8 +58,7 @@ class CriteriaCreator extends BaseCreator
         }
 
         $pluralized = Inflector::pluralize($this->getModel());
-        $modelName = ucfirst($pluralized);
 
-        return $modelName;
+        return ucfirst($pluralized);
     }
 }

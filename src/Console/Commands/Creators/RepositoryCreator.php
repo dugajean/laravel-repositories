@@ -92,8 +92,7 @@ class RepositoryCreator extends BaseCreator
     private function stripRepositoryName()
     {
         $stripped = str_ireplace('repository', '', $this->getName());
-        $result = ucfirst($stripped);
 
-        return $result;
+        return ucfirst($stripped);
     }
 }
