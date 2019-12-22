@@ -23,7 +23,7 @@
         "illuminate/support": "~5",
         "illuminate/database": "~5",
         "illuminate/filesystem": "~5",
-        "illuminate/console": "~5",
+        "illuminate/console": "~5"
     },
     "require-dev": {
         "mockery/mockery": "@stable",
